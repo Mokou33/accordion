@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>43js</title>
+    <meta name = "descriptio" content = "" >
+    <meta name = "keywords" content = "" >
+    <style >
+      *{margin: 0;padding: 0;}
+      /* body, html{width: 100%; height: 100%;} */
+      .fl {float: left;}
+      .fr {float: right;}
+      .clearfix:after {content: "";display: block;clear: both;}
+      a {text-decoration: none; color: #000;}
+      ul {list-style-type: none;}
+      .bg{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .bg-box-1{
+        background: url("images/1.jpg") no-repeat center/cover;
+      }
+      .bg-box-2{
+      background: url("images/2.jpg") no-repeat center/cover;
+      }
+      .bg-box-3{
+      background: url("images/3.jpg") no-repeat center/cover;
+      }
+      .bg-box-4{
+      background: url("images/4.jpg") no-repeat center/cover;
+      }
+      .bg-box-5{
+      background: url("images/5.jpg") no-repeat center/cover;
+      }
+      .bg-box-6{
+      background: url("images/6.jpg") no-repeat center/cover;
+      }
+      #wrap{
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        width: 1000px;
+        height: 400px;
+        /* background: #ccc;             标记 */
+      }
+      /* #wrap > ul{
+        width: 120%;
+      } */
+      #wrap > ul > li{
+        width: 100px;
+        height: 400px;
+        cursor: pointer;
+      }
+      #wrap > ul > li:nth-child(1){
+        background: url("images/1.jpg") no-repeat center/cover;
+      }
+      #wrap > ul > li:nth-child(2){
+        background: url("images/2.jpg") no-repeat center/cover;
+      }
+      #wrap > ul > li:nth-child(3){
+        background: url("images/3.jpg") no-repeat center/cover;
+      }
+      #wrap > ul > li:nth-child(4){
+        background: url("images/4.jpg") no-repeat center/cover;
+      }
+      #wrap > ul > li:nth-child(5){
+        width: 600px;
+        background: url("images/5.jpg") no-repeat center/cover;
+      }
+      #wrap > ul > li .text{
+        width: 100px;
+        height: 100%;
+        background-color: #000;
+        opacity: .5;
+      }
+      #wrap > ul > li > .text p{
+        padding: 40px 40px;
+        font-family: "microsoft yahei";
+        color: #fff;
+      }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"> </script>
+  </head>
+  <body>
+    <div class="bg bg-box-1"></div>
+    <div class="bg bg-box-2"></div>
+    <div class="bg bg-box-3"></div>
+    <div class="bg bg-box-4"></div>
+    <div class="bg bg-box-5"></div>
+    <div id="wrap">
+      <ul class="clearfix"> 
+        <li class="fl">
+          <div class="text">
+            <p>狮子王</p>
+          </div>
+        </li>
+        <li class="fl">
+          <div class="text">
+            <p>小莫</p>
+          </div>
+        </li>
+        <li class="fl">
+          <div class="text">
+            <p>冲田</p>
+          </div>
+        </li>
+        <li class="fl">
+          <div class="text">
+            <p>信长</p>
+          </div>
+        </li>
+        <li class="fl on">
+          <div class="text">
+            <p>南丁</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+   
+    <script>
+        (function(){
+          // 当移入到小盒子的时候进行类名的切换来更改小盒子的宽度
+          $('#wrap li').mouseover(function(){
+            // 判断当前盒子是否有 on 类名，如果没有移除所有盒子类名，在当前盒子添加 on
+            if(!$(this).hasClass('on')){
+              //$('#wrap li').removeClass('on');
+              //$(this).addClass('on');
+
+              $(this)
+                .addClass('on')
+                .siblings()
+                .removeClass('on'); 
+              // 切换背景
+              // 遍历每个 li 
+              $('#wrap li').each(function (i) {
+                // 判断当前 li 是否有类名 on
+                if ($(this).hasClass('on')) {
+                  $('.bg').stop().fadeOut(1000); //300ms 淡出
+                  $(`.bg:eq(${i})`).stop().fadeIn(1000); // 300ms 淡入
+                }
+              });
+              // 改变黑子宽度
+              $('.on').stop().animate({
+                width: 600
+              }, 600, 'linear');
+              $('#wrap li').not('.on').stop().animate({
+                width: 100
+              }, 600, 'linear');
+            } 
+          });
+        })();
+        /*
+        思路：
+            当鼠标移入其中一个盒子的时候，清除所有盒子的类名 on ，再在当前的盒子里添加类名 on 改变盒子的宽度
+            利用下标来切换大盒子的背景，
+
+        stop()  用于清除动画队列，否则自带鬼畜效果
+        
+        each(callback)  each() 方法为每个匹配元素规定要运行的函数。
+                        function(index,element)
+        */
+    </script>
+  </body>
+</html>
